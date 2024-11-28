@@ -43,12 +43,15 @@ Modern telecommunication networks face significant challenges with dynamic traff
 	• http://localhost:9090/alerts
 
 8. Explore Metrics:
+
 	•	Use the Prometheus query page to explore metrics such as:
 	•	station_a_current_load
 	•	station_b_current_load
 	•	station_c_current_load
 	•	Compare these metrics against the capacity metrics to test if alerts are being triggered.
+
 7. Customize Dashboards:
+
 	•	Log in to Grafana and create custom dashboards to visualize:
 	•	Real-time traffic load.
 	•	Capacity utilization.
