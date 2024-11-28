@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Prometheus yapılandırması
+      - ./alerts.yml:/etc/prometheus/alerts.yml          # Uyarı kurallarını bağladık
+    ports:
+      - "9090:9090"                                      # Prometheus web arayüzü
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana                   # Kalıcı veri için volume ekledik
+    ports:
+      - "3000:3000"                                     # Grafana web arayüzü
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin                   # Varsayılan kullanıcı adı
+      - GF_SECURITY_ADMIN_PASSWORD=admin               # Varsayılan şifre
+    restart: unless-stopped
+
+volumes:
+  grafana_data:

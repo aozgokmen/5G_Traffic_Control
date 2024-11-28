@@ -1,0 +1,29 @@
+groups:
+  - name: load_alerts
+    rules:
+      - alert: StationOverloaded_StationA
+        expr: station_a_current_load > station_a_capacity
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Station A is overloaded"
+          description: "Station A current load ({{ $value }}) has exceeded its capacity."
+
+      - alert: StationOverloaded_StationB
+        expr: station_b_current_load > station_b_capacity
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Station B is overloaded"
+          description: "Station B current load ({{ $value }}) has exceeded its capacity."
+
+      - alert: StationOverloaded_StationC
+        expr: station_c_current_load > station_c_capacity
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Station C is overloaded"
+          description: "Station C current load ({{ $value }}) has exceeded its capacity."
