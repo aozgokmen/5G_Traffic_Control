@@ -26,28 +26,29 @@ Modern telecommunication networks face significant challenges with dynamic traff
    git clone https://github.com/aozgokmen/5G_Traffic_Control.git
    cd 5G_Traffic_Control
 
-	2.	Start the services:
+2. Start the services:
+   ```bash
+   docker-compose up -d
+3. Start the traffic simulator:
+   ```bash
+   python3 traffic_simulator.py
 
-docker-compose up -d
+4. Access the services:
+   
+	• Prometheus: http://localhost:9090
+	• Grafana: http://localhost:3000
 
+6. Verify Alerts:
+   
+	• http://localhost:9090/alerts
 
-	3.	Start the traffic simulator:
-
-python3 traffic_simulator.py
-
-
-	4.	Access the services:
-	•	Prometheus: http://localhost:9090
-	•	Grafana: http://localhost:3000
-	5.	Verify Alerts:
-	•	Visit Prometheus’s alerts page: http://localhost:9090/alerts
-	6.	Explore Metrics:
+8. Explore Metrics:
 	•	Use the Prometheus query page to explore metrics such as:
 	•	station_a_current_load
 	•	station_b_current_load
 	•	station_c_current_load
 	•	Compare these metrics against the capacity metrics to test if alerts are being triggered.
-	7.	Customize Dashboards:
+7. Customize Dashboards:
 	•	Log in to Grafana and create custom dashboards to visualize:
 	•	Real-time traffic load.
 	•	Capacity utilization.
