@@ -1,100 +1,88 @@
-
 # 5G Traffic Control Project
 
 This project demonstrates a 5G network traffic monitoring and alerting system using **Prometheus**, **Grafana**, and a Python-based traffic simulation tool.
 
-## Overview
-
-Modern telecommunication networks face challenges with dynamic traffic loads. This project simulates traffic in a 5G network environment, monitors the load on base stations, and provides real-time alerts when traffic exceeds the capacity of a base station.
-
-### Key Features:
-- **Traffic Simulation:** A Python script (`traffic_simulator.py`) simulates dynamic traffic loads on base stations.
-- **Prometheus Integration:** Monitors and collects metrics from the Python simulation in real time.
-- **Alerting:** Configured alerts notify when any base station is overloaded.
-- **Grafana Dashboards:** Provides detailed visualizations of traffic metrics and alert states.
-- **Dockerized Deployment:** Easily deployable via Docker Compose.
-
 ---
 
-## How It Works
-
-### Traffic Simulation (`traffic_simulator.py`)
-The `traffic_simulator.py` script simulates three base stations:
-- **Station A**
-- **Station B**
-- **Station C**
-
-Each base station has:
-- **Current Load:** The simulated traffic currently being handled.
-- **Capacity:** The maximum traffic it can handle before becoming overloaded.
-
-The script exposes these metrics in a Prometheus-compatible format via an HTTP endpoint (`/metrics`).
-
-#### Example Metrics:
-```plaintext
-station_a_current_load 130
-station_a_capacity 100
-station_b_current_load 90
-station_b_capacity 80
-station_c_current_load 120
-station_c_capacity 120
-
-Monitoring and Alerting
+## Monitoring and Alerting
 
 Prometheus scrapes metrics from the Python script and evaluates predefined alert rules:
 
-	•	Overload Alerts: Triggered when the current_load exceeds the capacity for any base station.
+- **Overload Alerts:** Triggered when the `current_load` exceeds the `capacity` for any base station.
 
-Visualization
+---
+
+## Visualization
 
 Grafana dashboards display real-time metrics and alert statuses, allowing network operators to monitor the load distribution and identify bottlenecks.
 
-Setup and Run
+---
 
-Prerequisites
+## Setup and Run
 
-	•	Docker and Docker Compose installed on your system.
-	•	Python 3.12 or higher.
+### Prerequisites
 
-Steps:
+- Docker and Docker Compose installed on your system.
+- Python 3.12 or higher.
 
-	1.	Clone the repository:
+### Steps
 
-git clone https://github.com/aozgokmen/5G_Traffic_Control.git
-cd 5G_Traffic_Control
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/aozgokmen/5G_Traffic_Control.git
+   cd 5G_Traffic_Control
 
+2. Start the services:
+   To start the Prometheus and Grafana services using Docker Compose, run the following command:
+   ```bash
+   docker-compose up -d
 
-	2.	Start the services:
-
-docker-compose up -d
-
-
-	3.	Start the traffic simulator:
-
-python3 traffic_simulator.py
-
-
-	4.	Access the services:
+3. Start the traffic simulator:
+   To start the Python-based traffic simulation script, run the following command:
+   ```bash
+   python3 traffic_simulator.py
+4. Access the services:
+   After starting the simulator and services, you can access the monitoring tools using the following URLs:
 	•	Prometheus: http://localhost:9090
 	•	Grafana: http://localhost:3000
 
-Project Files
+5. Verify Alerts:
+You can verify the alerting rules by visiting Prometheus’s alerts page:
+```bash
+http://localhost:9090/alerts
+6. Customize Dashboards:
+   To create custom dashboards in Grafana, follow these steps:
+   - Log in to Grafana: [http://localhost:3000](http://localhost:3000)
+   - Use the default credentials:
+     - **Username:** `admin`
+     - **Password:** `admin` (or the one you set in the `docker-compose.yml`)
+   - Add Prometheus as a data source:
+     1. Navigate to **Configuration** → **Data Sources**.
+     2. Click **Add data source** and select **Prometheus**.
+     3. Set the URL to:
+        ```plaintext
+        http://prometheus:9090
+        ```
+     4. Save and test the connection.
+   - Create panels and dashboards to visualize the following metrics:
+     - `station_a_current_load`
+     - `station_b_current_load`
+     - `station_c_current_load`
 
-	•	traffic_simulator.py: Simulates 5G network traffic and exposes metrics.
-	•	prometheus.yml: Configures Prometheus to scrape metrics and define alert rules.
-	•	alerts.yml: Contains alert rules for detecting overloaded base stations.
-	•	docker-compose.yml: Deploys Prometheus and Grafana.
-	•	README.md: Documentation for the project.
+7. Trigger Alerts:
+   To test the alerting system:
+   - Increase the `current_load` values in the traffic simulator script to exceed the `capacity`.
+   - Wait for Prometheus to detect the change (based on the scrape interval).
+   - Check for active alerts in Prometheus at:
+     ```bash
+     http://localhost:9090/alerts
+     ```
 
-Example Alerts
+8. Monitor in Grafana:
+   - Visualize the active alerts and traffic metrics in your Grafana dashboards.
+   - Customize alert panels to show real-time status.
 
-Alerts are configured in alerts.yml. Examples include:
-
-	•	Station Overloaded: Alerts when a base station’s current_load exceeds its capacity for more than 1 minute.
-
-Future Enhancements
-
-	•	Add more granular traffic metrics, such as latency and packet loss.
-	•	Implement automatic load balancing based on overload conditions.
-	•	Expand to simulate multiple network regions.
-
+9. Shut Down Services:
+   When you are finished testing, you can stop all running containers with the following command:
+   ```bash
+   docker-compose down
