@@ -1,4 +1,4 @@
-Aşağıdaki içeriği README.md dosyanıza kopyalayabilirsiniz:
+
 
 # Prometheus + Grafana Alerting Project
 
